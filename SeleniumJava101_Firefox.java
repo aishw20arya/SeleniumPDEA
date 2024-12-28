@@ -1,5 +1,6 @@
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,13 +12,13 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class SeleniumJava101 {
+public class SeleniumJava101_Firefox {
 	RemoteWebDriver driver;
     @BeforeTest
      public void setUp() {
      DesiredCapabilities capabilities = new DesiredCapabilities();
-     capabilities.setCapability("browserName", "Chrome");
-     capabilities.setCapability("browserVersion", "113.0");
+     capabilities.setCapability("browserName", "FireFox");
+     capabilities.setCapability("browserVersion", "82.0");
      try {
     driver = new RemoteWebDriver(new URL("http://aishwarya_kasar:bikTUg4OgguCE8vccbWBq3NGNP9JIAu1ujp8xqWKG4W80UurBt@hub.lambdatest.com/wd/hub"),
 capabilities);
@@ -47,12 +48,14 @@ capabilities);
     	}
 
     	// Create a variable for a string value
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
     	String message = "Welcome to LambdaTest";
 
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
     	// Enter values in the "Enter Message" text box
     	WebElement enterMessageTextbox = driver.findElement(By.xpath("//input[@id='user-message']"));
     	enterMessageTextbox.sendKeys(message);
-
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
     	// Click "Get Checked Value"
     	WebElement getCheckedValueButton = driver.findElement(By.xpath("//button[text()='Get Checked Value']"));
     	getCheckedValueButton.click();
@@ -69,10 +72,12 @@ capabilities);
 
     	//Test Scenario02
     	// Click "Drag & Drop Sliders" under "Progress Bars & Sliders"
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
     	driver.get("https://www.lambdatest.com/selenium-playground");
     	WebElement dragDropSlidersLink = driver.findElement(By.linkText("Drag & Drop Sliders"));
     	dragDropSlidersLink.click();
 
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
     	// Select the slider "Default value 15"
     	WebElement slider = driver.findElement(By.xpath("//input[@value='15']"));
 
@@ -100,16 +105,20 @@ capabilities);
     	//TestScenario03
 
     	// Click "Input Form Submit" under "Input Forms"
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+    	
     	driver.get("https://www.lambdatest.com/selenium-playground");
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1500));
     	WebElement inputFormSubmitLink = driver.findElement(By.linkText("Input Form Submit"));
     	inputFormSubmitLink.click();
-
+    	
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
     	// Click "Submit" without filling in any information in the form
     	WebElement submitButton = driver.findElement(By.xpath("//button[text()='Submit']"));
     	submitButton.click();
 
     	// Assert "Please fill in the fields" error message
-    	String errorMessage = driver.findElement(By.xpath("//input[@id='name']")).getAttribute("validationMessage");
+    	String errorMessage = driver.findElement(By.id("name")).getAttribute("validationMessage");
     	if (errorMessage.equals("Please fill out this field.")) {
     	System.out.println("Error message validation passed!");
     	} else {
@@ -117,6 +126,7 @@ capabilities);
     	}
 
     	// Fill in Name, Email, and other fields
+    	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
     	WebElement nameField = driver.findElement(By.id("name"));
     	nameField.sendKeys("John Doe");
 
